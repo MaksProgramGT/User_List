@@ -6,9 +6,9 @@ data class User(
     val id: Int,
     val fio: String,
     val photo: ImageBitmap,
-    val adress: String,
+    val address: String,
     val phoneNumber: String,
     val email: String,
-    val birthday: Date,
+    val birthday: String,
     val password: String
 )
