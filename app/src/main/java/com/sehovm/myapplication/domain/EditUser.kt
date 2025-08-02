@@ -1,8 +1,8 @@
 package com.sehovm.myapplication.domain
 
-class EditUser {
+class EditUser(private val userListRepository: UserListRepository) {
 
-    fun editUser() {
-        TODO()
+    fun editUser(user: User) {
+        userListRepository.editUser(user)
     }
 }

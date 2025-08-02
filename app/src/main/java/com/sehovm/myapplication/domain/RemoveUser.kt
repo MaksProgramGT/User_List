@@ -1,10 +1,8 @@
 package com.sehovm.myapplication.domain
 
-class RemoveUser {
+class RemoveUser(private val userListRepository: UserListRepository) {
 
     fun removeUser(user: User) {
-        val userListInst: GetUserList = GetUserList()
-        var userList: ArrayList<User> = userListInst.getUserList()
-        userList.remove(user)
+        userListRepository.removeUser(user)
     }
 }

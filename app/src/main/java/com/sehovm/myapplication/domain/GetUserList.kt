@@ -1,8 +1,8 @@
 package com.sehovm.myapplication.domain
 
-class GetUserList {
+class GetUserList(private val userListRepository: UserListRepository) {
 
     fun getUserList(): ArrayList<User> {
-        TODO()
+        return userListRepository.getUserList()
     }
 }

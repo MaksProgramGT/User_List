@@ -1,10 +1,8 @@
 package com.sehovm.myapplication.domain
 
-class AddUser {
+class AddUse(private val userListRepository: UserListRepository) {
 
     fun addUser(user: User) {
-        val userListInst: GetUserList = GetUserList()
-        var userList: ArrayList<User> = userListInst.getUserList()
-        userList.add(user)
+        userListRepository.addUser(user)
     }
 }
