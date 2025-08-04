@@ -8,7 +8,7 @@ interface UserListRepository {
 
     fun removeUser(user: User)
 
-    fun getUserById(id: Int): User
+    fun getUserById(id: Int): User?
 
     fun getUserList(): ArrayList<User>
 }

@@ -1,8 +1,10 @@
 package com.sehovm.myapplication.domain
 
-class AddUse(private val userListRepository: UserListRepository) {
+import com.sehovm.myapplication.data.DBManager
+
+class AddUser(private val dbManager: DBManager) {
 
     fun addUser(user: User) {
-        userListRepository.addUser(user)
+        dbManager.addUser(user)
     }
 }

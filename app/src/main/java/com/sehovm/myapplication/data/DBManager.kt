@@ -32,8 +32,28 @@ class DBManager(context: Context) : UserListRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getUserById(id: Int): User {
-        TODO("Not yet implemented")
+    override fun getUserById(id: Int): User? {
+        var user: User? = null
+        var cursor = db?.query("users", null, null, null, null, null, null)
+
+        while (cursor?.moveToNext() == true) {
+            val userId = cursor.getString(cursor.getColumnIndexOrThrow("id")).toInt()
+            if (userId == id) {
+                val fio = cursor.getString(cursor.getColumnIndexOrThrow("fio"))
+                val photo = cursor.getString(cursor.getColumnIndexOrThrow("photo")).toByteArray()
+                val address = cursor.getString(cursor.getColumnIndexOrThrow("address"))
+                val phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow("phoneNumber"))
+                val email = cursor.getString(cursor.getColumnIndexOrThrow("email"))
+                val birthday = cursor.getString(cursor.getColumnIndexOrThrow("birthday"))
+                val password = cursor.getString(cursor.getColumnIndexOrThrow("password"))
+                user = User(userId, fio, photo, address, phoneNumber, email, birthday, password)
+                break
+            }
+        }
+
+        cursor?.close()
+
+        return user
     }
 
     override fun getUserList(): ArrayList<User> {
@@ -59,21 +79,6 @@ class DBManager(context: Context) : UserListRepository {
 
     fun openDB() {
         db = dbHelper.writableDatabase
-    }
-
-    fun readDBData() : ArrayList<String> {
-        val dataList = ArrayList<String>()
-        var cursor = db?.query("users", null, null, null, null, null, null)
-
-        while (cursor?.moveToNext() == true) {
-            var dataStr = cursor.getColumnIndex("fio")
-            val dataText = cursor.getString(dataStr)
-            dataList.add(dataText.toString())
-        }
-
-        cursor?.close()
-
-        return dataList
     }
 
     fun closeDB() {
