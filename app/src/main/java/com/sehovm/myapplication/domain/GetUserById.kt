@@ -1,8 +1,10 @@
 package com.sehovm.myapplication.domain
 
-class GetUserById(private val userListRepository: UserListRepository) {
+import com.sehovm.myapplication.data.DBManager
+
+class GetUserById(private val dbManager: DBManager) {
 
     fun getUserById(id: Int): User {
-        return userListRepository.getUserById(id)
+        return dbManager.getUserById(id)
     }
 }

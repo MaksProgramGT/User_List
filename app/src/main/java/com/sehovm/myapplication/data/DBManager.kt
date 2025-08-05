@@ -4,37 +4,32 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.sehovm.myapplication.domain.User
-import com.sehovm.myapplication.domain.UserListRepository
 
-class DBManager(context: Context) : UserListRepository {
+class DBManager(context: Context) {
     val dbHelper = DBHelper(context)
     var db: SQLiteDatabase? = null
 
-    override fun editUser(user: User) {
-        TODO("Not yet implemented")
+    fun editUser(user: User) {
+        var values = getValues(user)
+
+        db?.update("users", values, "id=?", arrayOf(user.id.toString()))
     }
 
-    override fun addUser(user: User) {
-        val values = ContentValues().apply {
-            put("fio", user.fio)
-            put("photo", user.photo)
-            put("address", user.address)
-            put("phoneNumber", user.phoneNumber)
-            put("email", user.email)
-            put("birthday", user.birthday)
-            put("password", user.password)
-        }
+    fun addUser(user: User) {
+        var values = getValues(user)
 
         db?.insert("users", null, values)
     }
 
-    override fun removeUser(user: User) {
-        TODO("Not yet implemented")
+    fun removeUser(user: User) {
+        db?.delete("users", "id = ?", arrayOf(user.id.toString()))
     }
 
-    override fun getUserById(id: Int): User? {
+    fun getUserById(id: Int): User {
         var user: User? = null
         var cursor = db?.query("users", null, null, null, null, null, null)
+
+        //cursor?.
 
         while (cursor?.moveToNext() == true) {
             val userId = cursor.getString(cursor.getColumnIndexOrThrow("id")).toInt()
@@ -53,10 +48,10 @@ class DBManager(context: Context) : UserListRepository {
 
         cursor?.close()
 
-        return user
+        return user ?: throw RuntimeException("Element with $id not found")
     }
 
-    override fun getUserList(): ArrayList<User> {
+    fun getUserList(): ArrayList<User> {
         val userList = ArrayList<User>()
         var cursor = db?.query("users", null, null, null, null, null, null)
 
@@ -75,6 +70,18 @@ class DBManager(context: Context) : UserListRepository {
         cursor?.close()
 
         return userList
+    }
+
+    fun getValues(user: User) : ContentValues {
+        return ContentValues().apply {
+            put("fio", user.fio)
+            put("photo", user.photo)
+            put("address", user.address)
+            put("phoneNumber", user.phoneNumber)
+            put("email", user.email)
+            put("birthday", user.birthday)
+            put("password", user.password)
+        }
     }
 
     fun openDB() {

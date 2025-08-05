@@ -1,8 +1,10 @@
 package com.sehovm.myapplication.domain
 
-class RemoveUser(private val userListRepository: UserListRepository) {
+import com.sehovm.myapplication.data.DBManager
+
+class RemoveUser(private val dbManager: DBManager) {
 
     fun removeUser(user: User) {
-        userListRepository.removeUser(user)
+        dbManager.removeUser(user)
     }
 }

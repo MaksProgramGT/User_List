@@ -1,8 +1,10 @@
 package com.sehovm.myapplication.domain
 
-class GetUserList(private val userListRepository: UserListRepository) {
+import com.sehovm.myapplication.data.DBManager
+
+class GetUserList(private val dbManager: DBManager) {
 
     fun getUserList(): ArrayList<User> {
-        return userListRepository.getUserList()
+        return dbManager.getUserList()
     }
 }

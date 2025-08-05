@@ -1,8 +1,10 @@
 package com.sehovm.myapplication.domain
 
-class EditUser(private val userListRepository: UserListRepository) {
+import com.sehovm.myapplication.data.DBManager
+
+class EditUser(private val dbManager: DBManager) {
 
     fun editUser(user: User) {
-        userListRepository.editUser(user)
+        dbManager.editUser(user)
     }
 }
